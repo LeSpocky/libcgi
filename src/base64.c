@@ -63,11 +63,11 @@ void decodeblock( unsigned char in[4], unsigned char out[3] )
 * @return Base64 encoded String
 * @see str_base64_decode
 **/
-char *str_base64_encode(char *str)
+char *str_base64_encode(const char *str)
 {
 	unsigned char in[3], out[4];
 	unsigned int i, len, blocksout = 0, linesize = strlen(str);
-	char *tmp = str;
+	const char *tmp = str;
 	char *result = (char *)malloc((linesize + 3 - linesize % 3) * 4 / 3 + 1);
 
 	if (!result)
@@ -110,11 +110,11 @@ char *str_base64_encode(char *str)
 * @return The decoded string
 * @see str_base64_encode
 **/
-char *str_base64_decode(char *str)
+char *str_base64_decode(const char *str)
 {
 	unsigned char in[4], out[3], v;
 	unsigned int i, len, pos = 0;
-	char *tmp = str;
+	const char *tmp = str;
 
 	char *result = (char *)malloc(strlen(str) + 1);
 	if (!result)

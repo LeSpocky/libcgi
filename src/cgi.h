@@ -47,7 +47,7 @@ extern int cgi_display_errors;
 
 // General purpose cgi functions
 extern void cgi_init_headers(void);
-extern void cgi_redirect(char *url);
+extern void cgi_redirect(const char *url);
 extern void cgi_fatal(const char *error);
 extern char *cgi_unescape_special_chars(const char *str);
 extern char *cgi_escape_special_chars(const char *str);
@@ -66,25 +66,24 @@ extern formvars *cgi_get_cookies(void);
 extern char *cgi_cookie_value(const char *cookie_name);
 
 // General purpose string functions
-extern int strnpos(char *s, char *ch, unsigned int count);
-extern int strpos(char *s, char *ch);
-extern char *strdel(char *s, int start, int count);
-extern char **explode(char *src, const char *token, int *total);
-extern char *substr(char *src, const int start, const int count);
-extern char *stripnslashes(char *s, int n);
-extern char *addnslashes(char *s, int n);
-extern char *stripnslashes(char *s, int n);
-extern char *str_nreplace(char *str, const char *delim, const char *with, int n);
-extern char *str_replace(char *str, const char *delim, const char *with);
-extern char *addslashes(char *str);
-extern char *stripslashes(char *str);
-extern char *str_base64_encode(char *str);
-extern char *str_base64_decode(char *str);
+extern int strnpos(const char *s, const char *ch, unsigned int count);
+extern int strpos(const char *s, const char *ch);
+extern char *strdel(const char *s, int start, int count);
+extern char **explode(const char *src, const char *token, int *total);
+extern char *substr(const char *src, const int start, const int count);
+extern char *addnslashes(const char *s, int n);
+extern char *stripnslashes(const char *s, int n);
+extern char *str_nreplace(const char *str, const char *delim, const char *with, int n);
+extern char *str_replace(const char *str, const char *delim, const char *with);
+extern char *addslashes(const char *str);
+extern char *stripslashes(const char *str);
+extern char *str_base64_encode(const char *str);
+extern char *str_base64_decode(const char *str);
 extern char *recvline(FILE *fp);
 extern char *md5(const char *str);
 
 extern void slist_add(formvars *item, formvars **start, formvars **last);
-extern int slist_delete(char *name, formvars **start, formvars **last);
+extern int slist_delete(const char *name, formvars **start, formvars **last);
 extern char *slist_item(const char *name, formvars *start);
 
 extern void slist_free(formvars **start);
@@ -106,7 +105,7 @@ extern int cgi_session_destroy();
 extern int cgi_session_register_var(const char *name, const char *value);
 extern int cgi_session_alter_var(const char *name, const char *new_value);
 extern int cgi_session_var_exists(const char *name);
-extern int cgi_session_unregister_var(char *name);
+extern int cgi_session_unregister_var(const char *name);
 extern int cgi_session_start();
 extern void cgi_session_cookie_name(const char *cookie_name);
 extern char *cgi_session_var(const char *name);

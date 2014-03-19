@@ -375,7 +375,7 @@ char *cgi_param_multiple(const char *name)
 * cgi_redirect("http://wwww.linux.org");
 * \endcode
 **/
-void cgi_redirect(char *url)
+void cgi_redirect(const char *url)
 {
 	if (headers_initialized) {
 		libcgi_error(E_WARNING, "<br><b>Cannot redirect. Headers already sent</b><br>");

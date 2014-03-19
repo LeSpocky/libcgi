@@ -50,7 +50,7 @@
 * puts(name); // will display My test string is called \"foobar"
 * \endcode
 */
-char *addnslashes(char *s, int n)
+char *addnslashes(const char *s, int n)
 {
 	char *tmp;
 	int len, j = 0;
@@ -98,7 +98,7 @@ char *addnslashes(char *s, int n)
 * puts(name); // will display My test string is called \"foobar\"
 * \endcode
 */
-char *addslashes(char *s)
+char *addslashes(const char *s)
 {
 	return addnslashes(s, strlen(s));
 }
@@ -118,7 +118,7 @@ char *addslashes(char *s)
 * puts(name); // will display My another string is called "blablabla\"
 * \endcode
 */
-char *stripnslashes(char *s, int n)
+char *stripnslashes(const char *s, int n)
 {
 	int j = 0;
 	char *tmp;
@@ -155,7 +155,7 @@ char *stripnslashes(char *s, int n)
 * puts(name); // will display My another string is called "blablabla"
 * \endcode
 */
-char *stripslashes(char *str)
+char *stripslashes(const char *str)
 {
 	return stripnslashes(str, strlen(str));
 }
@@ -243,7 +243,7 @@ void trim(char *str)
 * puts(part); // -> est o
 * \endcode
 **/
-char *substr(char *src, const int start, const int count)
+char *substr(const char *src, const int start, const int count)
 {
 	char *tmp;
 	tmp = (char *)malloc(count+1);
@@ -279,7 +279,7 @@ char *substr(char *src, const int start, const int count)
 *  	printf("Piece %d: %s\n", i, *(pieces+i));
 * \endcode
 **/
-char **explode(char *src, const char *token, int *total)
+char **explode(const char *src, const char *token, int *total)
 {
 	char **str;
 	register int i, j, count, item, start;
@@ -367,7 +367,7 @@ char **explode(char *src, const char *token, int *total)
 *  puts(name);
 *  \endcode
 **/
-char *str_nreplace(char *src, const char *delim, const char *with, int n)
+char *str_nreplace(const char *src, const char *delim, const char *with, int n)
 {
 	unsigned int w_len, i, n_len, counter;
 	char *buf;
@@ -433,7 +433,7 @@ char *str_nreplace(char *src, const char *delim, const char *with, int n)
 *  puts(name);
 *  \endcode
 **/
-char *str_replace(char *str, const char *delim, const char *with)
+char *str_replace(const char *str, const char *delim, const char *with)
 {
 	return str_nreplace(str, delim, with, strlen(str));
 }
@@ -451,7 +451,7 @@ char *replace(char *str, const char *delim, const char *with)
  * @param count Maximum number of chars to parse before exiting the function
  * @see strpos()
  */
-int strnpos(char *s, char *ch, unsigned int count)
+int strnpos(const char *s, const char *ch, unsigned int count)
 {
 	register unsigned int pos = 0, i;
 
@@ -472,7 +472,7 @@ int strnpos(char *s, char *ch, unsigned int count)
 * @param count Maximum number of ch to search
 * @see strnpos()
 **/
-int strpos(char *s, char *ch)
+int strpos(const char *s, const char *ch)
 {
 	return strnpos(s, ch, strlen(s));
 }
@@ -493,7 +493,7 @@ int strpos(char *s, char *ch)
 *  puts(txt);
 * \endcode
 **/
-char *strdel(char *s, int start, int count)
+char *strdel(const char *s, int start, int count)
 {
 	register int i, len, contador = 0;
 	register char *tmp;

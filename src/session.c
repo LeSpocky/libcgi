@@ -430,7 +430,7 @@ int cgi_session_var_exists(const char *name)
 * @param name Session variable name to unregister
 * @see cgi_session_var_exists(), cgi_session_register_var()
 */
-int cgi_session_unregister_var(char *name)
+int cgi_session_unregister_var(const char *name)
 {
 	if (!sess_initialized) {
 		session_lasterror = SESS_NOT_INITIALIZED;

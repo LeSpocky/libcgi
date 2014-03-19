@@ -59,7 +59,7 @@ void slist_add(formvars *item, formvars **start, formvars **last)
 }
 
 // Delete from list the item pointed by name
-int slist_delete(char *name, formvars **start, formvars **last)
+int slist_delete(const char *name, formvars **start, formvars **last)
 {
 	formvars *curr, *prev;
 
