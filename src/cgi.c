@@ -74,7 +74,7 @@ static const char hextable[256] = {
 
 
 
-int headers_initialized = 0;
+int headers_initialized;
 
 formvars *formvars_start = NULL;
 formvars *formvars_last = NULL;
@@ -402,6 +402,11 @@ void cgi_redirect(char *url)
 **/
 int cgi_init()
 {
+	/*	for use with libfcgi this has to be reinitialized again with
+	 *	each loop, libcgi stays in memory and cgi_init(), …, cgi_end()
+	 *	are called over and over again.	*/
+	headers_initialized = 0;
+
 	// Well... the reason I put cgi_get_cookies() here is to not
 	// cause problems with session's. Note that, when you want
 	// to use session within your program, you need  cgi_get_cookies()
