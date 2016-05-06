@@ -21,8 +21,6 @@
 #ifndef _CGI_H
 #define _CGI_H	1
 
-#include <stdio.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif
