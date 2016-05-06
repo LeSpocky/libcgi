@@ -5,4 +5,5 @@ compiler:
 before_script:
   - mkdir build
   - cd build
+sudo: false
 script: cmake .. && make
