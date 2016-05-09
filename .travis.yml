@@ -6,19 +6,43 @@ before_script:
   - cd build
 matrix:
   include:
+    # without fastcgi
     - compiler: gcc
+      addons:
+        apt:
+          packages:
+            - valgrind
       script: cmake -DCGI_WITH_FCGI:BOOL=OFF .. && make && make test
     - compiler: clang
+      addons:
+        apt:
+          packages:
+            - valgrind
       script: cmake -DCGI_WITH_FCGI:BOOL=OFF .. && make && make test
+
+    # with fastcgi
     - compiler: gcc
       addons:
         apt:
           packages:
             - libfcgi-dev
+            - valgrind
       script: cmake -DCGI_WITH_FCGI:BOOL=ON .. && make && make test
     - compiler: clang
       addons:
         apt:
           packages:
             - libfcgi-dev
+            - valgrind
       script: cmake -DCGI_WITH_FCGI:BOOL=ON .. && make && make test
+
+# if valgrind fails, this won't affect build result, but at least we see
+# it in the log. O:-)
+after_success:
+  - valgrind --leak-check=full --error-exitcode=1 ./test/cgi-test-slist add
+  - valgrind --leak-check=full --error-exitcode=1 ./test/cgi-test-slist deletezero
+  - valgrind --leak-check=full --error-exitcode=1 ./test/cgi-test-slist deleteone
+  - valgrind --leak-check=full --error-exitcode=1 ./test/cgi-test-slist deletetwo
+  - valgrind --leak-check=full --error-exitcode=1 ./test/cgi-test-slist deletethree
+  - valgrind --leak-check=full --error-exitcode=1 ./test/cgi-test-slist get
+  - valgrind --leak-check=full --error-exitcode=1 ./test/cgi-test-slist processdata
