@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/LeSpocky/libcgi.svg?branch=cmake)](https://travis-ci.org/LeSpocky/libcgi)
+
 Introduction
 ------------
 LibCGI is a simple to use yet powerful library written from scratch to assist in the making of CGI appliactions in C. It has support for string manipulation, linked lists, cookies, sessions, GET and POST methods and more.
