@@ -28,6 +28,17 @@ include(CMakePackageConfigHelpers)	# cmake 2.8.8
 include(FeatureSummary)
 include(GNUInstallDirs)				# cmake 2.8.5
 
+# options
+option(CGI_WITH_FCGI "compile with libfcgi (fastcgi) support" OFF)
+if(CGI_WITH_FCGI)
+	find_library(FCGI_LIBRARY fcgi)
+	if(FCGI_LIBRARY)
+		message(STATUS "FCGI_LIBARY: ${FCGI_LIBRARY}")
+	else(FCGI_LIBRARY)
+		message(FATAL_ERROR "could not find libfcgi")
+	endif(FCGI_LIBRARY)
+endif(CGI_WITH_FCGI)
+
 # additional compiler flags
 add_definitions(-Wall -Wextra -Wcast-align)
 

@@ -1,6 +1,7 @@
 /*
     LibCGI - A library to make CGI programs using C
     Copyright (C) 2001 Rafael Steil
+    Copyright 2016 Alexander Dahl <post@lespocky.de>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
@@ -19,7 +20,14 @@
     You can contact the author by e-mail: rafael@insanecorp.com
 */
 
+#include "config.h"
+
+#ifdef CGI_WITH_FCGI
+#include <fcgi_stdio.h>
+#else
 #include <stdio.h>
+#endif
+
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>

@@ -30,6 +30,12 @@ set_target_properties(${PROJECT_NAME}-shared PROPERTIES
 	VERSION		${PROJECT_VERSION}
 )
 
+if(CGI_WITH_FCGI)
+	target_link_libraries(${PROJECT_NAME}-shared
+		${FCGI_LIBRARY}
+	)
+endif(CGI_WITH_FCGI)
+
 # install binary
 install(TARGETS ${PROJECT_NAME}-shared
 	EXPORT ${PROJECT_NAME}-targets

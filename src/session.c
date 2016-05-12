@@ -56,7 +56,14 @@
 * @{
 */
 
+#include "config.h"
+
+#ifdef CGI_WITH_FCGI
+#include <fcgi_stdio.h>
+#else
 #include <stdio.h>
+#endif
+
 #include <string.h>
 #include <sys/time.h>
 #include <sys/types.h>

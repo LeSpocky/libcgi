@@ -19,11 +19,17 @@
     You can contact the author by e-mail: rafael@insanecorp.com
 */
 
+#include "config.h"
+
+#ifdef CGI_WITH_FCGI
+#include <fcgi_stdio.h>
+#else
 #include <stdio.h>
+#endif
+
 #include <stdlib.h>
 #include <string.h>
 
-#include "config.h"
 #include "error.h"
 #include "cgi.h"
 

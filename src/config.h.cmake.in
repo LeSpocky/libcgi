@@ -1,1 +1,19 @@
-#define	HAVE_MD5	0
+/*******************************************************************//**
+ *	@file	config.h
+ *
+ *	Generated at build time.
+ *
+ *	@author	Alexander Dahl <post@lespocky.de>
+ *
+ *	Copyright 2016 Alexander Dahl <post@lespocky.de>
+ **********************************************************************/
+
+#ifndef CGI_CONFIG_H
+#define CGI_CONFIG_H
+
+#define HAVE_MD5					0
+#cmakedefine CGI_WITH_FCGI
+
+#endif /* CGI_CONFIG_H */
+
+/* vim: set noet sts=0 ts=4 sw=4 sr: */
