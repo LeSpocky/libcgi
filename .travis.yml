@@ -7,18 +7,18 @@ before_script:
 matrix:
   include:
     - compiler: gcc
-      script: cmake -DCGI_WITH_FCGI:BOOL=OFF .. && make
+      script: cmake -DCGI_WITH_FCGI:BOOL=OFF .. && make && make test
     - compiler: clang
-      script: cmake -DCGI_WITH_FCGI:BOOL=OFF .. && make
+      script: cmake -DCGI_WITH_FCGI:BOOL=OFF .. && make && make test
     - compiler: gcc
       addons:
         apt:
           packages:
             - libfcgi-dev
-      script: cmake -DCGI_WITH_FCGI:BOOL=ON .. && make
+      script: cmake -DCGI_WITH_FCGI:BOOL=ON .. && make && make test
     - compiler: clang
       addons:
         apt:
           packages:
             - libfcgi-dev
-      script: cmake -DCGI_WITH_FCGI:BOOL=ON .. && make
+      script: cmake -DCGI_WITH_FCGI:BOOL=ON .. && make && make test
