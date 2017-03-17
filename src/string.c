@@ -26,6 +26,7 @@
 #include <ctype.h>
 
 #include "cgi.h"
+#include "cgi-private.h"
 #include "error.h"
 
 /*********************************************************
@@ -59,14 +60,14 @@ char *addnslashes(char *s, int n)
 		return NULL;
 
 	len = strlen(s);
-	tmp = (char *)malloc(len+1);
+	tmp = (char *) malloc( CGI_MAX((int) sizeof(void *), len + 1) );
 	if (!tmp)
 		return NULL;
 
 	while (*s) {
 		if ((n-- > 0) && ((*s == '\"') || (*s == '\'') || (*s == '\\'))) {
 			len++;
-			tmp = (char *)realloc(tmp, len);
+			tmp = (char *) realloc( tmp, CGI_MAX((int) sizeof(void *), len ) );
 			if (tmp == NULL)
 				return NULL;
 
@@ -126,7 +127,7 @@ char *stripnslashes(char *s, int n)
 	if (s == NULL)
 		return NULL;
 
-	tmp = (char *)malloc(strlen(s)+1);
+	tmp = (char *) malloc( CGI_MAX(sizeof(void *), strlen(s) + 1) );
 	if (tmp == NULL)
 		return NULL;
 
@@ -271,7 +272,7 @@ char * cgi_trim(char *str)
 char *substr(char *src, const int start, const int count)
 {
 	char *tmp;
-	tmp = (char *)malloc(count+1);
+	tmp = (char *) malloc( CGI_MAX((int) sizeof(void *), count + 1) );
 	if (tmp == NULL) {
 		libcgi_error(E_MEMORY, "%s, line %s", __FILE__, __LINE__);
 
@@ -344,7 +345,7 @@ char **explode(char *src, const char *token, int *total)
 			j++;
 		else {
 			// Found one. Now we need to allocate memory to store data
-			str[item] = (char *)malloc(j-start);
+			str[item] = (char *) malloc( CGI_MAX((int) sizeof(void *), j - start) );
 			if (str[item] == NULL) {
 				libcgi_error(E_MEMORY, "%s, line %s", __FILE__, __LINE__);
 
@@ -360,7 +361,7 @@ char **explode(char *src, const char *token, int *total)
 	}
 
 	// The last one
-	*(str+count) = (char *)malloc(j);
+	*(str+count) = (char *) malloc( CGI_MAX((int) sizeof(void *), j ) );
 	if (str[count] == NULL)
 		libcgi_error(E_MEMORY, "%s, line %s", __FILE__, __LINE__);
 
@@ -402,7 +403,7 @@ char *str_nreplace(char *src, const char *delim, const char *with, int n)
 	n_len = strlen(src);
 	counter = 0;
 
-	buf = (char *)malloc(n_len+1);
+	buf = (char *) malloc( CGI_MAX(sizeof(void *), n_len + 1) );
 	if (buf == NULL)
 		libcgi_error(E_MEMORY, "%s, line %s", __FILE__, __LINE__);
 
@@ -413,7 +414,7 @@ char *str_nreplace(char *src, const char *delim, const char *with, int n)
 			if (w_len > 1) {
 				n_len += w_len;
 
-				buf = (char *)realloc(buf, n_len);
+				buf = (char *) realloc( buf, CGI_MAX(sizeof(void *), n_len) );
 				if (buf == NULL)
 					libcgi_error(E_MEMORY, "%s, line %s", __FILE__, __LINE__);
 
@@ -528,7 +529,7 @@ char *strdel(char *s, int start, int count)
 	if ((count+start) > len)
 		return NULL;
 
-	tmp = (char *)malloc(len - count + 1);
+	tmp = (char *) malloc( CGI_MAX((int) sizeof(void *), len - count + 1) );
 	if (tmp == NULL)
 		libcgi_error(E_MEMORY, "%s, line %s", __FILE__, __LINE__);
 
@@ -628,7 +629,7 @@ char *make_string(char *s, ...)
 		str++;
 	}
 
-	str_return = (char *)malloc((len + 1) * sizeof(char));
+	str_return = (char *) malloc( CGI_MAX( sizeof(void *), len + 1) );
 	if (!str_return)
 		libcgi_error(E_MEMORY, "%s, line %s", __FILE__, __LINE__);
 
@@ -652,7 +653,7 @@ char *strcat_ex(const char *str1, const char *str2)
 
 	len = strlen(str1) + strlen(str2);
 
-	new_str = (char *)malloc((len + 1) * sizeof(char*));
+	new_str = (char *) malloc( CGI_MAX(sizeof(void *), len + 1) );
 	if (!new_str)
 		libcgi_error(E_MEMORY, "%s, line %s", __FILE__, __LINE__);
 

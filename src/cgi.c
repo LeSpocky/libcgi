@@ -26,6 +26,7 @@
 #include <sys/stat.h> /* for cgi_include() */
 
 #include "cgi.h"
+#include "cgi-private.h"
 #include "error.h"
 
 // There's no reason to not have this initialised.
@@ -190,7 +191,7 @@ formvars *cgi_process_form()
 		if (*trailing != '\0' || ! length || length > content_max)
 			return NULL;
 
-		post_data = (char *)malloc(length + 1);
+		post_data = (char *) malloc( CGI_MAX(sizeof(void *), length + 1) );
 		if (! post_data)
 			libcgi_error(E_MEMORY, "%s, line %s", __FILE__, __LINE__);
 
@@ -259,7 +260,7 @@ int cgi_include(const char *path)
 	if (stat (path, &fstats) == -1)
 		goto err_input;
 
-	if (! (fcontents = malloc (fstats.st_size)))
+	if ( !(fcontents = malloc( CGI_MAX((off_t) sizeof(void *), fstats.st_size) )) )
 		goto err_memory;
 
 	if (! (fp = fopen (path, "r")))
@@ -435,7 +436,7 @@ char *cgi_unescape_special_chars(const char *str)
 	char c;
 	char hex[2];
 
-	new = (char *)malloc(strlen(str) + 1);
+	new = (char *) malloc( CGI_MAX(sizeof(void *), strlen(str) + 1) );
 	if (! new)
 		libcgi_error(E_MEMORY, "%s, line %s", __FILE__, __LINE__);
 
@@ -469,7 +470,7 @@ char *cgi_unescape_special_chars(const char *str)
 	*write = '\0';
 
 	// free unused memory. no reason to fail.
-	new = realloc(new, strlen(new) + 1);
+	new = realloc( new, CGI_MAX(sizeof(void *), strlen(new) + 1) );
 
 	return new;
 }
@@ -489,7 +490,7 @@ char *cgi_escape_special_chars(const char *str)
 
 	// worst case scenario: every character would need to be escaped, requiring
 	// 3 times more memory than the original string.
-	new = (char*)malloc((len * 3) + 1);
+	new = (char *) malloc( CGI_MAX(sizeof(void *), (len * 3) + 1) );
 	if (! new)
 		libcgi_error(E_MEMORY, "%s, line %s", __FILE__, __LINE__);
 
@@ -509,7 +510,7 @@ char *cgi_escape_special_chars(const char *str)
 	new[i] = '\0';
 
 	// free unused memory. no reason to fail.
-	new = realloc(new, i+1);
+	new = realloc( new, CGI_MAX((int) sizeof(void *), i + 1) );
 
 	return new;
 }

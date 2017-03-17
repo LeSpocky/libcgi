@@ -23,8 +23,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "error.h"
 #include "cgi.h"
+#include "cgi-private.h"
+#include "error.h"
 
 formvars *cookies_start = NULL;
 formvars *cookies_last = NULL;
@@ -101,7 +102,7 @@ formvars *cgi_get_cookies()
 		while (*aux++ != '=')
 			position++;
 
-		data->name = (char *)malloc(position+1);
+		data->name = (char *) malloc( CGI_MAX(sizeof(void *), position + 1) );
 		if (!data->name) {
 			libcgi_error(E_MEMORY, "%s, line %s", __FILE__, __LINE__);
 
@@ -124,7 +125,7 @@ formvars *cgi_get_cookies()
 			aux++;
 		}
 
-		data->value = (char *)malloc(position + 1);
+		data->value = (char *) malloc( CGI_MAX(sizeof(void *), position + 1) );
 		if (!data->value) {
 			exit(-1);
 		}

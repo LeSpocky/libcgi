@@ -66,6 +66,7 @@
 #include <errno.h>
 
 #include "cgi.h"
+#include "cgi-private.h"
 #include "session.h"
 #include "error.h"
 
@@ -335,11 +336,11 @@ int cgi_session_register_var(const char *name, const char *value)
 		if (!data)
 			libcgi_error(E_MEMORY, "%s, line %s", __FILE__, __LINE__);
 
-		data->name = (char *)malloc(strlen(name) + 1);
+		data->name = (char *) malloc( CGI_MAX(sizeof(void *), strlen(name) + 1) );
 		if (!data->name)
 			libcgi_error(E_MEMORY, "%s, line %s", __FILE__, __LINE__);
 
-		data->value = (char *)malloc(strlen(value) + 1);
+		data->value = (char *) malloc( CGI_MAX(sizeof(void *), strlen(value) + 1) );
 
 		if (!data->value) {
 			free(data->name);
@@ -387,7 +388,8 @@ int cgi_session_alter_var(const char *name, const char *new_value)
 			value_len = strlen(new_value) + 1;
 
 			if (value_len > strlen(data->value)) {
-				data->value = realloc(data->value, value_len+1);
+				data->value = realloc( data->value,
+						CGI_MAX(sizeof(void *), value_len + 1) );
 				if (!data->value)
 					libcgi_error(E_MEMORY, "%s, line %s", __FILE__, __LINE__);
 
@@ -534,7 +536,7 @@ int cgi_session_start()
 	// This is a temporary solution, I'll try to
 	// make a faster implementation
 	stat(sess_fname, &st);
-	buf = (char *)malloc(st.st_size + 2);
+	buf = (char *) malloc( CGI_MAX((off_t) sizeof(void *), st.st_size + 2) );
 	if (!buf)
 		libcgi_error(E_MEMORY, "File %s, line %s", __FILE__, __LINE__);
 

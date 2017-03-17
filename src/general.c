@@ -23,8 +23,9 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "error.h"
 #include "cgi.h"
+#include "cgi-private.h"
+#include "error.h"
 
 struct iso8859_15 {
 	char code;
@@ -70,7 +71,7 @@ char *htmlentities(const char *str)
 
 	siz = strlen(str) + 1;
 
-	buf = (char *)malloc(siz);
+	buf = (char *) malloc( CGI_MAX((int) sizeof(void *), siz) );
 	if (!buf)
 		libcgi_error(E_MEMORY, "Failed to alloc memory at htmlentities, cgi.c");
 
@@ -79,7 +80,8 @@ char *htmlentities(const char *str)
 			if (*str == he[j].code) {
 				len = strlen(he[j].html) - 1;
 
-				buf = realloc(buf, siz += len);
+				siz += len;
+				buf = realloc( buf, CGI_MAX((int) sizeof(void *), siz) );
 				if (!buf)
 					libcgi_error(E_MEMORY, "Failed to alloc memory at htmlentities, cgi.c");
 
@@ -177,7 +179,7 @@ char **file(const char *filename, unsigned int *total)
 
 		buf[i] = '\0';
 
-		str[lines - 1] = (char *)malloc(char_count);
+		str[lines - 1] = (char *) malloc( CGI_MAX(sizeof(void *), char_count) );
 		if (str[lines - 1] == NULL) {
 			libcgi_error(E_MEMORY, "%s, line %s", __FILE__, __LINE__);
 

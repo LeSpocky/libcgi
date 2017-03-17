@@ -32,6 +32,7 @@ LICENCE:        Copyright (c) 2001 Bob Trower, Trantor Standard Systems Inc.
 #include <stdlib.h>
 #include <string.h>
 
+#include "cgi-private.h"
 #include "error.h"
 
 static const char cb64[]="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
@@ -116,7 +117,7 @@ char *str_base64_decode(char *str)
 	unsigned int i, len, pos = 0;
 	char *tmp = str;
 
-	char *result = (char *)malloc(strlen(str) + 1);
+	char *result = (char *) malloc( CGI_MAX(sizeof(void *), strlen(str) + 1) );
 	if (!result)
 		libcgi_error(E_MEMORY, "Failed to alloc memory at base64.c");
 
