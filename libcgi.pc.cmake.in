@@ -5,5 +5,7 @@ Name: libcgi
 Description: @CGI_DESCRIPTION@
 URL: @CGI_URL@
 Version: @PROJECT_VERSION@
+Requires.private: 
 Libs: -L${libdir} -lcgi
+Libs.private: 
 Cflags: -I${includedir}
