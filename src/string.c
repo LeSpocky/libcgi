@@ -544,9 +544,9 @@ char *strdel(char *s, int start, int count)
 **/
 char *recvline(FILE *s)
 {
-	int i = 0, ch;
+	int ch;
 	char *buf = 0;
-	size_t siz = 0;
+	size_t i = 0, siz = 0;
 
 	for (; (ch = fgetc(s)) != EOF; i++) {
 		if (i == siz)
