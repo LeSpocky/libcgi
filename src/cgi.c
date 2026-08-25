@@ -69,10 +69,6 @@ extern formvars *sess_list_start;
 // Set to 1 to activate runtime debugation, 0 to disable it
 int cgi_display_errors = 1;
 
-// cookie.c
-extern formvars *cookie_start;
-extern formvars *cookie_end;
-
 // Separates *query in name=value pairs, then gets each piece of result of them, storing
 // the result in the linked list global variable
 formvars *process_data(const char *query, formvars **start, formvars **last,
